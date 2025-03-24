@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
     public ItemDatabase itemDatabase;
     [SerializeField]
     private Inventory inv;
+    public Image[] inventorySlots;
+    public Image[] equipSlots;
 
     //Save Game Shenanagains
     bool savedFileExists;
@@ -59,6 +62,11 @@ public class GameManager : MonoBehaviour
                     switchActivePanel(-1); //close the pause menu
                     setGameState(1);
                 }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    switchActivePanel(-1); //close the pause menu
+                    setGameState(1);
+                }
                 break;
             case 3:
                 //scene transition logic
@@ -72,9 +80,24 @@ public class GameManager : MonoBehaviour
 
     void playState()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("e pressed");
+            if (activePanel == -1)
+            {
+                updateInventorySlots(0);
+                switchActivePanel(2); //pull up the inventory
+            }
+            else if (activePanel == 2)
+            {
+                switchActivePanel(-1); //close the pause menu
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-           if(activePanel == -1)
+            Debug.Log("esc pressed");
+            if (activePanel == -1)
             {
                 switchActivePanel(0); //pull up the pause menu 
             }
@@ -151,5 +174,28 @@ public class GameManager : MonoBehaviour
             Debug.Log("Item: " + itemDatabase.GetItemById(temp.getID()).Name + ", Quantity: " + temp.getQuantity());
             temp = temp.next;
         }
+    }
+
+    void updateInventorySlots(int choice)
+    {
+        int i = 0;
+        ItemNode temp = inv.firstNode;
+        switch (choice)
+        {
+            case 0: //inventory menu slots
+                while (temp != null && i < inventorySlots.Length)
+                {
+                    inventorySlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                    Debug.Log("Updating slot " + i);
+                    i++;
+                    temp = temp.next;
+                }
+                break;
+            case 1: //hotbar slots
+                break;
+            case 2: //equipable slots
+                break;
+        }
+       
     }
 }
