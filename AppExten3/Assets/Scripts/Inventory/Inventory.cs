@@ -1,11 +1,13 @@
-using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
     public ItemNode firstNode;
+    public ItemDatabase itemDatabase;
 
-    private void Start()
+    //This script is JUST the linked list inventory itself, other behavior is handled in InventoryManager
+    public Inventory(ItemDatabase database)
     {
+        itemDatabase = database;
         firstNode = null; //assign the first node on start
     }
 
@@ -60,7 +62,6 @@ public class Inventory : MonoBehaviour
         }
         return listSize; //counts up each time temp.next isnt null, returns the count
     }
-
     public void removeFirstItem()
     {
         if (firstNode == null)
