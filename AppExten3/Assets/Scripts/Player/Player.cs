@@ -77,18 +77,22 @@ public class Player : MonoBehaviour
         if(horizontal > 0)
         {
             anim.SetInteger("Direction", 2);
+            anim.SetInteger("LastDirection", 2);
         }
         else if (horizontal < 0)
         {
             anim.SetInteger("Direction", 1);
+            anim.SetInteger("LastDirection", 1);
         }
         if (vertical > 0)
         {
             anim.SetInteger("Direction", 0);
+            anim.SetInteger("LastDirection", 0);
         }
         else if (vertical < 0)
         {
             anim.SetInteger("Direction", 3);
+            anim.SetInteger("LastDirection", 3);
         } //not my proudest code block, no sir
 
         velocity.y += gravity * Time.deltaTime;
