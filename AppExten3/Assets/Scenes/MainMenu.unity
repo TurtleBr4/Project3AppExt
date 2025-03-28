@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 377433325}
   - component: {fileID: 377433324}
   m_Layer: 5
-  m_Name: Play
+  m_Name: WorkingTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Working Title: IDK lol'
+  m_text: 'Working Title: Geurventur_'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 939d52b89d9268245b4de22d23996e70, type: 2}
   m_sharedMaterial: {fileID: -7667828528272614801, guid: 939d52b89d9268245b4de22d23996e70, type: 2}
