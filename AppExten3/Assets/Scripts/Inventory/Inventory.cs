@@ -62,6 +62,43 @@ public class Inventory
         }
         return listSize; //counts up each time temp.next isnt null, returns the count
     }
+
+    public void swapItems(int id1, int id2)
+    {
+        if (id1 == id2) { return; } //if the items are (somehow) the same then dont bother
+
+        ItemNode prevX = null, currX = firstNode;
+        while (currX != null && currX.getID() != id1)
+        {
+            prevX = currX;
+            currX = currX.next;
+        }
+
+        ItemNode prevY = null, currY = firstNode;
+        while (currY != null && currY.getID() != id2)
+        {
+            prevY = currY;
+            currY = currY.next;
+        }
+
+        if (currX == null || currY == null) { return; }
+
+        if (prevX != null)
+        {
+            prevX.next = currY;
+        }
+        else { firstNode = currY; }
+
+        if (prevY != null)
+        {
+            prevY.next = currX;
+        }
+        else { firstNode = currX; }
+
+        ItemNode temp = currX.next;
+        currX.next = currY.next;
+        currY.next = temp;
+    }
     public void removeFirstItem()
     {
         if (firstNode == null)

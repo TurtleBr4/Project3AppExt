@@ -34,10 +34,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateToMouse();
+        //RotateToMouse();
         goMove();
     }
 
+    private void LateUpdate()
+    {
+        RotateToMouse();
+    }
     void RotateToMouse()
     {
         // Find the mouse position in the world

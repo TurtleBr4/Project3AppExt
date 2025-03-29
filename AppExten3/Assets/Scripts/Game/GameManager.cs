@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private Inventory inv;
     public Image[] inventorySlots;
     public Image[] equipSlots;
+    public Image[] hotbarSlots;
 
     //Save Game Shenanagains
     bool savedFileExists;
@@ -192,8 +193,22 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case 1: //hotbar slots
+                while (temp != null && i < hotbarSlots.Length)
+                {
+                    hotbarSlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                    Debug.Log("Updating hotbar slot " + i);
+                    i++;
+                    temp = temp.next;
+                }
                 break;
             case 2: //equipable slots
+                while (temp != null && i < equipSlots.Length)
+                {
+                    equipSlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                    Debug.Log("Updating slot " + i);
+                    i++;
+                    temp = temp.next;
+                }
                 break;
         }
        
