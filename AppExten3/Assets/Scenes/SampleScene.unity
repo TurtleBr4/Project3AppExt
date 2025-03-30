@@ -2600,7 +2600,7 @@ MonoBehaviour:
   target: {fileID: 442624815}
   offsetY: 3
   rotation: 60
-  followSpeed: 5
+  followSpeed: 1
 --- !u!1 &380601255
 GameObject:
   m_ObjectHideFlags: 0

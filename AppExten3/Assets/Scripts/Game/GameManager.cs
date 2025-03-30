@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        //put the logic for loading shit here, thats gamestate 0
+        //put the logic for loading here, thats gamestate 0
 
         if (!savedFileExists)
         {
@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
+                updateInventorySlots(1); //update the hotbar contiounously (look into listeners for more effeciency)
                 playState();
                 break;
             case 2:
