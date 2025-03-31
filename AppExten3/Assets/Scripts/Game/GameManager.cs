@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     bool savedFileExists;
     Vector3 lastPosition;
     int lastScene;
-    public static int progression; //we'll update this int whenever big game events happen, like a checkpoint system. Certain things will only happen when this number is a certain value.
+    private static int progression; //we'll update this int whenever big game events happen, like a checkpoint system. Certain things will only happen when this number is a certain value.
 
 
     private void Awake()
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 1:
                 //call any regular game state functions here
-                if(Time.timeScale == 0)
+                if(Time.timeScale != 1)
                 {
                     Time.timeScale = 1;
                 }
@@ -184,6 +184,7 @@ public class GameManager : MonoBehaviour
 
     public void setGameState(int i) { gameState = i; }
     public int getGameState() { return gameState; }
+    public int getProgression() { return progression; }
 
     public void addItemToInventory(int id, int quant)
     {
