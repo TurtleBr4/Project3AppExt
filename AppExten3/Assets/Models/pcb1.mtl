@@ -1,0 +1,6 @@
+# Made in Blockbench 4.12.3
+newmtl m_5cb1b652-b24e-8624-fb9c-e1b6cf5a2037
+map_Kd boardtext.png
+newmtl m_0bcc2ca4-452a-c4a2-2142-38ba16e62df0
+map_Kd boardcomponent.png
+newmtl none
