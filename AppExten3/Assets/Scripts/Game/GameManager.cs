@@ -4,14 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private Transform playerLocation;
     public bool isPaused = false;
     public GameObject[] panelsToSwitch;
     public int activePanel = -1; //-1 means no panel is active (i would do 0 but thats needed for indexes and whatnot) 
-
-    [SerializeField]
-    private TestPlayer player;
     [SerializeField]
     private int gameState = 0; //game states will use an id system, switch the number and you switch the current state
+    private int activeScene;
 
     //Inventory variables
     public ItemDatabase itemDatabase;
@@ -28,29 +27,46 @@ public class GameManager : MonoBehaviour
 
     //Save Game Shenanagains
     bool savedFileExists;
+    Vector3 lastPosition;
+    int lastScene;
+    public static int progression; //we'll update this int whenever big game events happen, like a checkpoint system. Certain things will only happen when this number is a certain value.
+
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject); //this is our game manager, it would be annoying to manually add it in everywhere so just make sure it never leaves us
+        //preload a save file if it exists to define savedFileExits
     }
     private void Start()
     {
-        //put the logic for loading here, thats gamestate 0
+        
+    }
 
+    private void loadGameData()
+    {
+        //put the logic for loading here, thats gamestate 0
         if (!savedFileExists)
         {
             inv = new Inventory(itemDatabase);
+            setGameState(1);
+            return;
         }
+        setGameState(1);
+    }
 
-        gameState = 1; //unpaused, game is playing
+    private void saveGameData(){
+        lastPosition = playerLocation.position;
+        lastScene = activeScene;
+
+        //now write to JSON
     }
 
     private void Update()
     {
         switch (gameState)
         {
-            case 0: //theoretically theres no way for this to ever be reached but JUST IN CASE (get it) we'll handle it anyway
-                setGameState(1);
+            case 0: //Load state, also the main menu state (this should only ever be called once!)
+                loadGameData();
                 break;
             case 1:
                 //call any regular game state functions here
@@ -78,6 +94,9 @@ public class GameManager : MonoBehaviour
             case 3:
                 //scene transition logic
                 
+                break;
+            case 4:
+                //dialog state
                 break;
             default:
                 //if by some genuinely impressive run of bad luck none of these state are active, logic to fix whatever mess caused that should go here
@@ -184,7 +203,7 @@ public class GameManager : MonoBehaviour
         printInventoryToConsole();
     }
 
-    public void printInventoryToConsole()
+    public void printInventoryToConsole() //for debugging
     {
         ItemNode temp = inv.firstNode;
         while (temp != null)
