@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
     public Image[] inventorySlots;
     public Image[] equipSlots;
     public Image[] hotbarSlots;
+    
+    //Camera Stuff
+    public CameraFollow camsys;
+    public Transform tempCameraLocation;
+    private bool toggleCamLocation;
 
     //Save Game Shenanagains
     bool savedFileExists;
@@ -82,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     void playState()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)) //inventory
         {
             Debug.Log("e pressed");
             if (activePanel == -1)
@@ -96,7 +101,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)) //menu
         {
             Debug.Log("esc pressed");
             if (activePanel == -1)
@@ -106,6 +111,17 @@ public class GameManager : MonoBehaviour
             else
             {
                 switchActivePanel(-1); //close the pause menu
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
+            if(toggleCamLocation){
+                camsys.switchFocus(tempCameraLocation, 7, 5);
+                toggleCamLocation = !toggleCamLocation;
+            }
+            else{
+                camsys.switchFocus(camsys.playerTarget, 3, 5);
+                toggleCamLocation = !toggleCamLocation;
             }
         }
     }
