@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public Player player;
     private Transform playerLocation;
     public bool isPaused = false;
     public GameObject[] panelsToSwitch;
@@ -19,6 +20,9 @@ public class GameManager : MonoBehaviour
     public Image[] inventorySlots;
     public Image[] equipSlots;
     public Image[] hotbarSlots;
+
+    //Dialogue Stuff
+    private DialogueManager yapper;
     
     //Camera Stuff
     public CameraFollow camsys;
@@ -39,7 +43,8 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        
+        playerLocation = player.transform;
+        yapper = GetComponent<DialogueManager>();
     }
 
     private void loadGameData()
@@ -58,7 +63,7 @@ public class GameManager : MonoBehaviour
         lastPosition = playerLocation.position;
         lastScene = activeScene;
 
-        //now write to JSON
+        //how write to JSON google dot com
     }
 
     private void Update()
@@ -73,6 +78,11 @@ public class GameManager : MonoBehaviour
                 if(Time.timeScale != 1)
                 {
                     Time.timeScale = 1;
+                }
+                if (yapper.isYapping)
+                {
+                    setGameState(4);
+                    return;
                 }
                 updateInventorySlots(1); //update the hotbar contiounously (look into listeners for more effeciency)
                 playState();
@@ -97,6 +107,12 @@ public class GameManager : MonoBehaviour
                 break;
             case 4:
                 //dialog state
+                if (!yapper.isYapping) { setGameState(1); }
+                if (Input.GetKeyDown(KeyCode.Mouse0)) 
+                {
+                    yapper.onNextLine();
+                    Debug.Log("Onto the next line!");
+                } //consider rewrite for more flexible controls
                 break;
             default:
                 //if by some genuinely impressive run of bad luck none of these state are active, logic to fix whatever mess caused that should go here
@@ -132,8 +148,7 @@ public class GameManager : MonoBehaviour
                 switchActivePanel(-1); //close the pause menu
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1)){
+        if (Input.GetKeyDown(KeyCode.Alpha1)){ //debugging feature
             if(toggleCamLocation){
                 camsys.switchFocus(tempCameraLocation, 7, 5);
                 toggleCamLocation = !toggleCamLocation;
@@ -143,6 +158,7 @@ public class GameManager : MonoBehaviour
                 toggleCamLocation = !toggleCamLocation;
             }
         }
+
     }
 
     public void switchActivePanel(int panIndex)

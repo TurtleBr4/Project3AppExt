@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     public Camera mainCamera;
     public Transform playerHead;
     private CharacterController controller;
+    public DialogueManager yapper;
     //public Transform playerModel;
 
     //Movement
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     public bool isRunning = false;
     private Vector3 velocity;
     private Vector3 movementInput;
+    public bool isFrozen = false;
 
 
     //Animation and Attacking
@@ -34,8 +36,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //RotateToMouse();
-        goMove();
+        if (!isFrozen) { goMove(); }
     }
 
     private void LateUpdate()
@@ -111,6 +112,21 @@ public class Player : MonoBehaviour
     void attackNow()
     {
 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "NPC":
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    yapper.startDialogue(other.gameObject.GetComponent<NPCInteraction>());
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 
