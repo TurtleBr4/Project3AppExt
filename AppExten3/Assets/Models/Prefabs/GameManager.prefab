@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8217246478636836842}
   - component: {fileID: 4140587986673579082}
+  - component: {fileID: 8861657140496517374}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,13 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368961166805683469451c771e4bb7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   isPaused: 0
   panelsToSwitch:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   activePanel: -1
-  player: {fileID: 0}
   gameState: 0
   itemDatabase: {fileID: 11400000, guid: 87ea80a754edf1b45974aa205b407b90, type: 2}
   inventorySlots:
@@ -63,3 +64,18 @@ MonoBehaviour:
   - {fileID: 0}
   camsys: {fileID: 0}
   tempCameraLocation: {fileID: 0}
+--- !u!114 &8861657140496517374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036044127373853035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34d7e4b9b9818543b27092c2cd07c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueText: {fileID: 0}
+  dialogueBox: {fileID: 0}
+  isYapping: 0
