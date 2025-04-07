@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         Player = GameObject.Find("Player").GetComponent<Player>();
+        lastPlayerLocation = Player.transform;
     }
 
     public int getHealth(){return Health;}
