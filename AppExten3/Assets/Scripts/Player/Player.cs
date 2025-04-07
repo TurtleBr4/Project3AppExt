@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     public Transform playerHead;
     private CharacterController controller;
     public DialogueManager yapper;
+    public int Health;
+    public int maxHealth;
     //public Transform playerModel;
 
     //Movement
@@ -119,6 +121,11 @@ public class Player : MonoBehaviour
 
     }
 
+    public void changeHeatlh(int amt){
+        if(amt <= Health){Health += amt;}
+        else{Health = 0;}
+    }
+
     private void OnTriggerStay(Collider other)
     {
         switch (other.tag)
@@ -133,6 +140,7 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+
 
 
 }
