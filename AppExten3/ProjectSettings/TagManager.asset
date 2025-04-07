@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SmallPlane
   - NPC
+  - Enemy
   layers:
   - Default
   - TransparentFX
