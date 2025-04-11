@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class Container : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int itemInside; //the id for the item 
+    private GameManager manager;
+    void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(other.tag == "Player"){
+            //play an opening animation
+            
+        }
     }
 }
