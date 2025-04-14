@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     protected int Damage;
     protected float Speed;
     protected float attackSpeed;
+    public bool isRangedAttacker;
     protected Player Player; //reference stored so we dont have to constantly pull it
     protected Transform lastPlayerLocation;
     protected NavMeshAgent agent;
