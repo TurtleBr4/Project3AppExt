@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8217246478636836842}
   - component: {fileID: 4140587986673579082}
-  - component: {fileID: 8861657140496517374}
+  - component: {fileID: 191786458696589894}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: 0}
   camsys: {fileID: 0}
   tempCameraLocation: {fileID: 0}
---- !u!114 &8861657140496517374
+--- !u!114 &191786458696589894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
