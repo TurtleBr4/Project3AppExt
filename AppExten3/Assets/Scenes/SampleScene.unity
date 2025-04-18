@@ -18275,6 +18275,11 @@ Transform:
   - {fileID: 1162597987}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1912103893 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 710915599557941473, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
+  m_PrefabInstance: {fileID: 2365341463917178932}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2015426058 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1564824343879121881, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
@@ -18592,6 +18597,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 879381395976842216, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
+      propertyPath: thingThatLooksAtPlayer
+      value: 
+      objectReference: {fileID: 1912103893}
+    - target: {fileID: 879381395976842216, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 745606813}
@@ -18642,6 +18651,14 @@ PrefabInstance:
     - target: {fileID: 3805651784413751836, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333027074242752735, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333027074242752735, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7012600508413436682, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
       propertyPath: m_Name
