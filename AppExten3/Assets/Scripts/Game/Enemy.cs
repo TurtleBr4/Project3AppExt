@@ -5,13 +5,16 @@ public class Enemy : MonoBehaviour
 {
     protected int Health;
     protected int maxHealth;
+    [SerializeField]
     protected int Damage;
     protected float Speed;
     protected float attackSpeed;
     public bool isRangedAttacker;
-    protected Player Player; //reference stored so we dont have to constantly pull it
+    protected static Player Player; //reference stored so we dont have to constantly pull it
     protected Transform lastPlayerLocation;
     protected NavMeshAgent agent;
+    [SerializeField]
+    protected Animator anim;
 
     void Start()
     {

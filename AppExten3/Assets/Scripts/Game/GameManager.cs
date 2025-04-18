@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
     int lastScene;
     private static int progression; //we'll update this int whenever big game events happen, like a checkpoint system. Certain things will only happen when this number is a certain value.
 
+    public Sprite[] healthIcons;
+    public Image healthDisplay;
+
 
     private void Awake()
     {
@@ -160,6 +163,35 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        updateHealthDisplay();
+    }
+
+    void updateHealthDisplay()
+    {
+        switch (player.Health)
+        {
+            case > 84:
+                healthDisplay.sprite = healthIcons[0];
+                break;
+            case > 68:
+                healthDisplay.sprite = healthIcons[1];
+                break;
+            case > 52:
+                healthDisplay.sprite = healthIcons[2];
+                break;
+            case > 36:
+                healthDisplay.sprite = healthIcons[3];
+                break;
+            case > 20:
+                healthDisplay.sprite = healthIcons[4];
+                break;
+            case > 0:
+                healthDisplay.sprite = healthIcons[5];
+                break;
+            default:
+                healthDisplay.sprite = healthIcons[6];
+                break;
+        }
     }
 
     public void switchActivePanel(int panIndex)

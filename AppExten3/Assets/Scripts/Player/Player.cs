@@ -38,12 +38,14 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         runSpeed = 2 * moveSpeed;
+        Health = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!isFrozen) { goMove(); }
+        Debug.Log(Health);
     }
 
     private void LateUpdate()

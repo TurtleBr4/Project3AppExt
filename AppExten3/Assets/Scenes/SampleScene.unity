@@ -430,6 +430,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &175809755 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7384529344329274862, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
+  m_PrefabInstance: {fileID: 6982800765252718083}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &211519984 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8147191572051419218, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
@@ -18671,6 +18682,67 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &2515854753405242693
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 388824377398593988, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_Name
+      value: Chaser
+      objectReference: {fileID: 0}
+    - target: {fileID: 2431834973771385542, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: Damage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.229
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982308624260423790, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aa8ff5262ae6cd54eb486d26164f875b, type: 3}
 --- !u!1001 &2997771819769189597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18757,9 +18829,45 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 442624818}
     - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: healthDisplay
+      value: 
+      objectReference: {fileID: 175809755}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
       propertyPath: tempCameraLocation
       value: 
       objectReference: {fileID: 1075671854}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: healthIcons.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: 'healthIcons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4258001, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: 'healthIcons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1449268857, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: 'healthIcons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 640253075, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: 'healthIcons.Array.data[3]'
+      value: 
+      objectReference: {fileID: -1124704916, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: 'healthIcons.Array.data[4]'
+      value: 
+      objectReference: {fileID: 760691274, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: 'healthIcons.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1133226297, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+    - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: 'healthIcons.Array.data[6]'
+      value: 
+      objectReference: {fileID: -54762262, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
     - target: {fileID: 4140587986673579082, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
       propertyPath: 'hotbarSlots.Array.data[0]'
       value: 
@@ -18849,6 +18957,10 @@ PrefabInstance:
       propertyPath: yapper
       value: 
       objectReference: {fileID: 1803694229}
+    - target: {fileID: 1642325196896110668, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1642325196896110668, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
       propertyPath: mainCamera
       value: 
@@ -19228,3 +19340,4 @@ SceneRoots:
   - {fileID: 308446364667229129}
   - {fileID: 1342412583455640155}
   - {fileID: 2997771819769189597}
+  - {fileID: 2515854753405242693}
