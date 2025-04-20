@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     protected int Health;
-    protected int maxHealth;
+    protected int maxHealth = 100;
     [SerializeField]
     protected int Damage;
     protected float Speed;
@@ -18,11 +18,16 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        Health = maxHealth;
         agent = GetComponent<NavMeshAgent>();
         Player = GameObject.Find("Player").GetComponent<Player>();
-        lastPlayerLocation = Player.transform;
+        lastPlayerLocation = Player.gameObject.transform;
     }
 
+    public void changeHealth(int amt)
+    {
+        Health += amt;
+    }
     public int getHealth(){return Health;}
     public int getDamage(){return Damage;}
 

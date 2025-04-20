@@ -7,6 +7,8 @@ TagManager:
   - SmallPlane
   - NPC
   - Enemy
+  - Wall
+  - BossTrigger
   layers:
   - Default
   - TransparentFX

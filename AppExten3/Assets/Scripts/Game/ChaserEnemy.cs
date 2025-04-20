@@ -33,8 +33,10 @@ public class ChaseEnemy : Enemy
             spinTrail.SetActive(false);
             isAttacking = false;
         }
+
     }
 
+    
     public void doAttack()
     {
         Player.changeHeatlh(-Damage);

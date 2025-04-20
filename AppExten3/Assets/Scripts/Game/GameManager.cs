@@ -302,64 +302,64 @@ public class GameManager : MonoBehaviour
 
     private string saveFile => Application.persistentDataPath + "/save.json";
 
-private void SaveGameToFile() {
-    SaveData data = new SaveData();
+    private void SaveGameToFile() {
+        SaveData data = new SaveData();
 
-    // Player data
-    data.player = new PlayerSaveData {
-        health = player.Health,
-        position = new float[] {
-            player.transform.position.x,
-            player.transform.position.y,
-            player.transform.position.z
+        // Player data
+        data.player = new PlayerSaveData {
+            health = player.Health,
+            position = new float[] {
+                player.transform.position.x,
+                player.transform.position.y,
+                player.transform.position.z
+            }
+        };
+
+        // Inventory data
+        data.inventory = new InventorySaveData();
+        ItemNode current = inv.firstNode;
+        while (current != null) {
+            data.inventory.items.Add(new InventoryItem {
+                id = current.getID(),
+                quantity = current.getQuantity()
+            });
+            current = current.next;
         }
-    };
 
-    // Inventory data
-    data.inventory = new InventorySaveData();
-    ItemNode current = inv.firstNode;
-    while (current != null) {
-        data.inventory.items.Add(new InventoryItem {
-            id = current.getID(),
-            quantity = current.getQuantity()
-        });
-        current = current.next;
+        data.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        data.progression = progression;
+
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(saveFile, json);
+        Debug.Log("Game saved.");
     }
 
-    data.sceneIndex = SceneManager.GetActiveScene().buildIndex;
-    data.progression = progression;
+    private bool LoadGameFromFile() {
+        if (!File.Exists(saveFile)) {
+            Debug.Log("No save file found.");
+            return false;
+        }
 
-    string json = JsonUtility.ToJson(data, true);
-    File.WriteAllText(saveFile, json);
-    Debug.Log("Game saved.");
-}
+        string json = File.ReadAllText(saveFile);
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-private bool LoadGameFromFile() {
-    if (!File.Exists(saveFile)) {
-        Debug.Log("No save file found.");
-        return false;
+        // Load player
+        Vector3 pos = new Vector3(data.player.position[0], data.player.position[1], data.player.position[2]);
+        player.transform.position = pos;
+        player.Health = data.player.health;
+
+        // Load inventory
+        inv = new Inventory(itemDatabase); // clear and recreate
+        foreach (var item in data.inventory.items) {
+            inv.addItem(item.id, item.quantity);
+        }
+
+        // Optional: load scene and progression
+        lastScene = data.sceneIndex;
+        progression = data.progression;
+
+        Debug.Log("Game loaded.");
+        return true;
     }
-
-    string json = File.ReadAllText(saveFile);
-    SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-    // Load player
-    Vector3 pos = new Vector3(data.player.position[0], data.player.position[1], data.player.position[2]);
-    player.transform.position = pos;
-    player.Health = data.player.health;
-
-    // Load inventory
-    inv = new Inventory(itemDatabase); // clear and recreate
-    foreach (var item in data.inventory.items) {
-        inv.addItem(item.id, item.quantity);
-    }
-
-    // Optional: load scene and progression
-    lastScene = data.sceneIndex;
-    progression = data.progression;
-
-    Debug.Log("Game loaded.");
-    return true;
-}
 
 }

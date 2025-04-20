@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private Animator anim;
     public bool isMoving = false;
     public bool isAttacking = false;
+    public int currentItemId = -1; //-1 is no item 
 
     private void Awake()
     {
@@ -46,6 +47,10 @@ public class Player : MonoBehaviour
     {
         if (!isFrozen) { goMove(); }
         Debug.Log(Health);
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            attackNow();
+        }
     }
 
     private void LateUpdate()
@@ -120,7 +125,20 @@ public class Player : MonoBehaviour
 
     void attackNow()
     {
+        isAttacking = true;
+        // this time we rotate the entire model in the firing direction
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Plane plane = new Plane(Vector3.up, playerHead.position); 
 
+        if (plane.Raycast(ray, out float distance))
+        {
+            Vector3 targetPoint = ray.GetPoint(distance);
+            Vector3 direction = (targetPoint - playerHead.position).normalized;
+
+            // Rotate towards the mouse
+            Quaternion lookRotation = Quaternion.LookRotation(-direction, Vector3.up);
+            gameObject.transform.rotation = Quaternion.Slerp(playerHead.rotation, lookRotation, Time.deltaTime * 10f);
+        }
     }
 
     public void changeHeatlh(int amt){
