@@ -22,26 +22,17 @@ public class PatrolEnemy : Enemy
         agent.SetDestination(patrolPoints[currentWaypointIndex].position);
         currentWaypointIndex = (currentWaypointIndex + 1) % patrolPoints.Length;
         Debug.Log("Patrollin");
+
     }
 
     void doAttack(float dist){
 
         currentState = 1;
 
-        if(!isRangedAttacker){
-            agent.SetDestination(Player.transform.position); //break the patrol routine, follow the player
-
-            if(dist <= attackRange / 2) //within attack range, actually attack
-            { 
-                Player.changeHeatlh(-Damage);
-                attackCooldown = 500;
-            }
-        }
-        else{
-
-            thingThatLooksAtPlayer.LookAt(Player.transform);
-        }
         
+        Player.changeHeatlh(-Damage);
+        attackCooldown = 500;
+
     }
 
     void Update()
