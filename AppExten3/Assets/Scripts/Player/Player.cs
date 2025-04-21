@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public DialogueManager yapper;
     public int Health;
     public int maxHealth;
-    //public Transform playerModel;
+    public Transform playerModel;
 
     //Movement
     public float moveSpeed = 10f;
@@ -26,6 +26,10 @@ public class Player : MonoBehaviour
     public bool isMoving = false;
     public bool isAttacking = false;
     public int currentItemId = -1; //-1 is no item 
+    private Quaternion lastRotation;
+    public Transform firePoint;
+    public GameObject projectilePrefab;
+    public int projectileSpeed = 10;
 
     private void Awake()
     {
@@ -47,6 +51,7 @@ public class Player : MonoBehaviour
     {
         if (!isFrozen) { goMove(); }
         Debug.Log(Health);
+        lastRotation = playerModel.transform.rotation;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             attackNow();
@@ -126,19 +131,34 @@ public class Player : MonoBehaviour
     void attackNow()
     {
         isAttacking = true;
-        // this time we rotate the entire model in the firing direction
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        Plane plane = new Plane(Vector3.up, playerHead.position); 
 
-        if (plane.Raycast(ray, out float distance))
+        // Assume ground plane is at y = firePoint.y
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0, firePoint.position.y, 0));
+
+        if (groundPlane.Raycast(ray, out float distance))
         {
             Vector3 targetPoint = ray.GetPoint(distance);
-            Vector3 direction = (targetPoint - playerHead.position).normalized;
+            Vector3 direction = (targetPoint - firePoint.position);
+            direction.y = 0; // Ignore vertical component
+            direction.Normalize();
 
-            // Rotate towards the mouse
-            Quaternion lookRotation = Quaternion.LookRotation(-direction, Vector3.up);
-            gameObject.transform.rotation = Quaternion.Slerp(playerHead.rotation, lookRotation, Time.deltaTime * 10f);
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = direction * projectileSpeed;
+            }
+            Destroy(projectile, 5f);
         }
+        anim.SetTrigger("attack");
+        
+    }
+
+    void attackDone() //called from our event when the animation is finished
+    {
+        isAttacking = false;
+        //playerModel.rotation = lastRotation;
     }
 
     public void changeHeatlh(int amt){

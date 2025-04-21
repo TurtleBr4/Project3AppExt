@@ -3693,6 +3693,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d34d7e4b9b9818543b27092c2cd07c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1805816860 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3632306864962978982, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
+  m_PrefabInstance: {fileID: 3600020539838974645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1912103893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 710915599557941473, guid: 8872d6d7da751e753a5cb5c7c0aaee91, type: 3}
@@ -4404,6 +4409,14 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 1642325196896110668, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
+      propertyPath: playerModel
+      value: 
+      objectReference: {fileID: 1805816860}
+    - target: {fileID: 1642325196896110668, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 6659809137582446344, guid: 54291c7d79374104ba6e525d74141583, type: 3}
     - target: {fileID: 2314702003772320865, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4442,6 +4455,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2314702003772320865, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5124348253712188017, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7518356590773745752, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
