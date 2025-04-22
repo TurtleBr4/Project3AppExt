@@ -64,6 +64,15 @@ MonoBehaviour:
   - {fileID: 0}
   camsys: {fileID: 0}
   tempCameraLocation: {fileID: 0}
+  healthIcons:
+  - {fileID: 4258001, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+  - {fileID: 1449268857, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+  - {fileID: 640253075, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+  - {fileID: -1124704916, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+  - {fileID: 760691274, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+  - {fileID: 1133226297, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+  - {fileID: -54762262, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
+  healthDisplay: {fileID: 0}
 --- !u!114 &191786458696589894
 MonoBehaviour:
   m_ObjectHideFlags: 0

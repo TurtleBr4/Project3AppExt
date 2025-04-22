@@ -108,7 +108,7 @@ MonoBehaviour:
   yapper: {fileID: 0}
   Health: 0
   maxHealth: 0
-  playerModel: {fileID: 0}
+  playerModel: {fileID: 3632306864962978982}
   moveSpeed: 5
   runSpeed: 0
   gravity: -0.981
