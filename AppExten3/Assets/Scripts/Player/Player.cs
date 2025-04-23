@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         enemyLayer = LayerMask.GetMask("Enemy");
     }
 
