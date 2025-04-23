@@ -320,6 +320,7 @@ public class GameManager : MonoBehaviour
     public void quitGame()
     {
         Debug.Log("Quitting...");
+        SaveGameToFile();
         Application.Quit(); //temporary, we have to save our game data at some point
     }
 

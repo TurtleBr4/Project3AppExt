@@ -31,6 +31,10 @@ public class Player : MonoBehaviour
     public GameObject projectilePrefab;
     public int projectileSpeed = 10;
 
+    //audio
+    public AudioClip playerShoot;
+    private AudioSource audioSource;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -44,6 +48,9 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         runSpeed = 2 * moveSpeed;
         Health = maxHealth;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = playerShoot;
+        audioSource.loop = false;
     }
 
     // Update is called once per frame
@@ -154,6 +161,7 @@ public class Player : MonoBehaviour
             Destroy(projectile, 5f);
         }
         anim.SetTrigger("attack");
+        audioSource.Play();
         
     }
 
