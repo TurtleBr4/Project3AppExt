@@ -144,7 +144,9 @@ public class Player : MonoBehaviour
             direction.Normalize();
 
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
+            Projectile p = projectile.GetComponent<Projectile>();
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
+            p.shooterTag = tag;
             if (rb != null)
             {
                 rb.linearVelocity = direction * projectileSpeed;

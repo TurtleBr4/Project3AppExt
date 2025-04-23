@@ -9,6 +9,7 @@ public class ChaseEnemy : Enemy
 
     void Start()
     {
+        Health = maxHealth;
         agent = GetComponent<NavMeshAgent>();
         spinTrail.SetActive(false);
     }
@@ -38,6 +39,12 @@ public class ChaseEnemy : Enemy
             spinTrail.SetActive(false);
             isAttacking = false;
             Debug.Log("Lost the Enemy!");
+        }
+
+        if (Health <= 0)
+        {
+            gameObject.SetActive(false);
+            Debug.Log("Kerblewy");
         }
 
     }

@@ -39,11 +39,14 @@ public class PatrolEnemy : Enemy
         int rnd = Random.Range(0, 2);
         GameObject projectile;
         Rigidbody rb;
+        Projectile pComp;
         switch (rnd)
         {
             case 0:
                 projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-                projectile.GetComponent<Projectile>().damage = Damage;
+                pComp = projectile.GetComponent<Projectile>();
+                pComp.damage = Damage;
+                pComp.shooterTag = tag;
                 rb = projectile.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
@@ -54,7 +57,9 @@ public class PatrolEnemy : Enemy
                 break;
             case 1:
                 projectile = Instantiate(projectilePrefab, firePoint2.position, Quaternion.identity);
-                projectile.GetComponent<Projectile>().damage = Damage;
+                pComp = projectile.GetComponent<Projectile>();
+                pComp.damage = Damage;
+                pComp.shooterTag = tag;
                 rb = projectile.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
@@ -88,6 +93,12 @@ public class PatrolEnemy : Enemy
         {
             agent.isStopped = false;
             doPatrol();
+        }
+
+        if (Health <= 0)
+        {
+            gameObject.SetActive(false);
+            Debug.Log("Kerblewy");
         }
     }
 }

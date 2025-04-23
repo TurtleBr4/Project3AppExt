@@ -4,6 +4,7 @@ public class Projectile : MonoBehaviour
 {
     public int damage;
     private Rigidbody rb;
+    public string shooterTag;
 
 
     void Start()
@@ -21,13 +22,23 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(shooterTag == collision.gameObject.tag)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.GetComponent<Enemy>().changeHealth(damage);
+            collision.gameObject.GetComponent<Enemy>().changeHealth(-damage);
         }
         else if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<Player>().changeHeatlh(damage);
+            collision.gameObject.GetComponent<Player>().changeHeatlh(-damage);
+        }
+        else if (collision.gameObject.tag == "Helper")
+        {
+            collision.gameObject.GetComponent<Friendo>().takeDamage(damage);
         }
         Destroy(gameObject);
     }

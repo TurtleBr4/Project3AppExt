@@ -72,8 +72,11 @@ public class Friendo : MonoBehaviour
 
     void doAttack(Transform target)
     {
+        Projectile p;
         GameObject bullet = Instantiate(projectileAttack, firePoint.position, Quaternion.identity);
-        bullet.GetComponent<Projectile>().damage = -attackDamage;
+        p = bullet.GetComponent<Projectile>();
+        p.damage = -attackDamage;
+        p.shooterTag = tag;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {

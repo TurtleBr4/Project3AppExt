@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField]
     protected int Health;
     protected int maxHealth = 100;
     [SerializeField]
@@ -29,6 +30,11 @@ public class Enemy : MonoBehaviour
     public void changeHealth(int amt)
     {
         Health += amt;
+    }
+
+    private void Update()
+    {
+        
     }
 
     protected Transform positionStateChecker()
