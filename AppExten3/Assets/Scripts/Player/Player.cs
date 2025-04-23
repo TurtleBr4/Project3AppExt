@@ -1,4 +1,7 @@
+using System;
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -30,6 +33,10 @@ public class Player : MonoBehaviour
     public Transform firePoint;
     public GameObject projectilePrefab;
     public int projectileSpeed = 10;
+    public LayerMask enemyLayer;
+    private int range;
+    private int radius;
+    public GameObject lazerPrefab;
 
     //audio
     public AudioClip playerShoot;
@@ -38,6 +45,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        enemyLayer = LayerMask.GetMask("Enemy");
     }
 
 
@@ -168,11 +176,86 @@ public class Player : MonoBehaviour
     public void specialAttackNow(int damage, int id)
     {
         Debug.Log("special attack!");
+        //for weapon items, blast wave, 
+        switch (id){
+            case 6://demon core
+                performSphereCastAttack(40, 40, -damage);
+                changeHeatlh(-20);
+                Debug.Log("DEMON CORE!!");
+                break;
+            case 7://lazer pew pew
+                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+                // Assume ground plane is at y = firePoint.y
+                Plane groundPlane = new Plane(Vector3.up, new Vector3(0, firePoint.position.y, 0));
+
+                if (groundPlane.Raycast(ray, out float distance))
+                {
+                    Vector3 targetPoint = ray.GetPoint(distance);
+                    Vector3 direction = (targetPoint - firePoint.position);
+                    direction.y = 0; // Ignore vertical component
+                    direction.Normalize();
+
+                    GameObject projectile = Instantiate(lazerPrefab, firePoint.position, Quaternion.LookRotation(-direction));
+                    Projectile p = projectile.GetComponent<Projectile>();
+                    Rigidbody rb = projectile.GetComponent<Rigidbody>();
+                    p.damage = damage;
+                    p.shooterTag = tag;
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = -direction * 0;
+                    }
+                if(Input.GetKeyUp(KeyCode.Mouse1)){
+                    Destroy(projectile);
+                }
+                Destroy(projectile, 1f);
+                }
+                break;
+            case 8:
+            performSphereCastAttack(50, 50, -damage);
+                changeHeatlh(-99);
+                Debug.Log("NVKED");
+                break;
+            default:
+                break;
+        }
     }
+
+    public void performSphereCastAttack(int rad, int rang, int damage)
+    {
+        range = rang;
+        radius = rad;
+
+        RaycastHit[] hits = Physics.SphereCastAll(
+            origin: transform.position,
+            radius: radius,
+            direction: transform.forward,
+            maxDistance: range,
+            layerMask: enemyLayer
+        );
+
+        foreach (RaycastHit hit in hits)
+        {
+            Enemy enemy = hit.collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.changeHealth(damage);
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward * range);
+        Gizmos.DrawWireSphere(transform.position + transform.forward * range, radius);
+    }
+
 
     public void specialItemNow(int id)
     {
         Debug.Log("special item!");
+
     }
 
     void attackDone() //called from our event when the animation is finished

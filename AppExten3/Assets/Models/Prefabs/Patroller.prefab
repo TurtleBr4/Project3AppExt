@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: 1438547514527752848}
   - component: {fileID: 879381395976842216}
   - component: {fileID: 6333027074242752735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Patroller
   m_TagString: Enemy
   m_Icon: {fileID: 0}

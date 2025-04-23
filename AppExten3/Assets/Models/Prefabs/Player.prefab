@@ -121,6 +121,10 @@ MonoBehaviour:
   firePoint: {fileID: 1730385965649813518}
   projectilePrefab: {fileID: 6659809137582446344, guid: 54291c7d79374104ba6e525d74141583, type: 3}
   projectileSpeed: 10
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  lazerPrefab: {fileID: 7866026252473538973, guid: 919add32b81e07a5e9a5dabede498d6f, type: 3}
   playerShoot: {fileID: 8300000, guid: dad3a315d8f6c7c49a10e7370e61f351, type: 3}
 --- !u!95 &5124348253712188017
 Animator:
