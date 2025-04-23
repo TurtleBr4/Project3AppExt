@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     protected float attackSpeed;
     public bool isRangedAttacker;
     protected static Player Player; //reference stored so we dont have to constantly pull it
+    protected static Friendo Friendo;
     protected Transform lastPlayerLocation;
     protected NavMeshAgent agent;
     [SerializeField]
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
         Health = maxHealth;
         agent = GetComponent<NavMeshAgent>();
         Player = GameObject.Find("Player").GetComponent<Player>();
+        Friendo = GameObject.Find("Friendo").GetComponent<Friendo>();
         lastPlayerLocation = Player.gameObject.transform;
     }
 
@@ -28,6 +30,20 @@ public class Enemy : MonoBehaviour
     {
         Health += amt;
     }
+
+    protected Transform positionStateChecker()
+    {
+        if(Friendo.gameObject.activeInHierarchy)
+        {
+            Debug.Log("friendo is the target");
+            return Friendo.transform;
+        }
+        else
+        {
+            return Player.transform;
+        }
+    }
+
     public int getHealth(){return Health;}
     public int getDamage(){return Damage;}
 

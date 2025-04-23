@@ -7,6 +7,7 @@ TagManager:
   - SmallPlane
   - NPC
   - Enemy
+  - Helper
   - Wall
   - BossTrigger
   layers:

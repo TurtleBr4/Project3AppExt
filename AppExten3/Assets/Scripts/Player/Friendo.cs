@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ public class Friendo : MonoBehaviour
     private NavMeshAgent agent;
     private float lastShotTime;
 
+    public int health;
+    public int maxHealth = 100;
     
     public Transform player;
     public int moveSpeed;
@@ -19,7 +22,8 @@ public class Friendo : MonoBehaviour
     public int shotCooldown;
     public Transform firePoint;
 
-    private int stupidCounterThatIHaveToAddToGetThisThingToWork = 0;
+    public Sprite[] healthIcons;
+    public Image healthDisplay;
 
     private void Awake()
     {
@@ -31,6 +35,8 @@ public class Friendo : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         player = GameObject.Find("Player").transform;
+        health = maxHealth;
+        tag = "Helper";
     }
 
     private void Update()
@@ -55,6 +61,13 @@ public class Friendo : MonoBehaviour
                 lastShotTime = Time.time;
             }
         }
+
+        updateHealthDisplay();
+
+        if(health <= 0)
+        {
+            keelOverAndDie();
+        }
     }
 
     void doAttack(Transform target)
@@ -74,6 +87,44 @@ public class Friendo : MonoBehaviour
     void getPlayer()
     {
         player = GameObject.FindWithTag("Player").transform;
+    }
+
+    public void takeDamage(int dmg)
+    {
+        health -= dmg;
+    }
+
+    void updateHealthDisplay()
+    {
+        switch (health)
+        {
+            case > 84:
+                healthDisplay.sprite = healthIcons[0];
+                break;
+            case > 68:
+                healthDisplay.sprite = healthIcons[1];
+                break;
+            case > 52:
+                healthDisplay.sprite = healthIcons[2];
+                break;
+            case > 36:
+                healthDisplay.sprite = healthIcons[3];
+                break;
+            case > 20:
+                healthDisplay.sprite = healthIcons[4];
+                break;
+            case > 0:
+                healthDisplay.sprite = healthIcons[5];
+                break;
+            default:
+                healthDisplay.sprite = healthIcons[6];
+                break;
+        }
+    }
+
+    void keelOverAndDie()
+    {
+        gameObject.SetActive(false);
     }
 
     

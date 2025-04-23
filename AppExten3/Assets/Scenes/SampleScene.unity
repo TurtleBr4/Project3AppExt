@@ -4132,12 +4132,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5634813001681832820, guid: 48e7bfc8cf027b04a89dd071886cc706, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634813001681832820, guid: 48e7bfc8cf027b04a89dd071886cc706, type: 3}
       propertyPath: m_StoppingDistance
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8462944144012915818, guid: 48e7bfc8cf027b04a89dd071886cc706, type: 3}
       propertyPath: m_Name
       value: Friendo
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462944144012915818, guid: 48e7bfc8cf027b04a89dd071886cc706, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
