@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
 
     void playSong()
     {
-        int rnd = Random.Range(0, songs.Length - 1);
+        int rnd = Random.Range(0, songs.Length);
         source.clip = songs[rnd];
         source.Play();
         isPlayingSong = true;
@@ -27,5 +27,16 @@ public class AudioManager : MonoBehaviour
         {
             playSong();
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            forceNextSong();
+        }
+    }
+
+    void forceNextSong()
+    {
+        source.Stop();
+        playSong();
     }
 }

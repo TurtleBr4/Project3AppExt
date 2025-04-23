@@ -4183,6 +4183,7 @@ MonoBehaviour:
   songs:
   - {fileID: 8300000, guid: bd98000f1d4ddf74db186be163630e22, type: 3}
   - {fileID: 8300000, guid: 66ce6aa158c19eb43ba91ef268374092, type: 3}
+  - {fileID: 8300000, guid: 93099bc499ac7954e8c8d4cfbfd3e3aa, type: 3}
 --- !u!4 &1805816860 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3632306864962978982, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
