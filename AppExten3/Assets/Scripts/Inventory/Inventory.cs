@@ -17,6 +17,11 @@ public class Inventory
         {
             firstNode = new ItemNode(ID, Amount);
         }
+        else if (getIndexOf(getNodeById(ID)) != -1)
+        {
+            ItemNode temp = getNodeById(ID);
+            temp.setQuantity(temp.getQuantity() + Amount);
+        }
         else
         {
             ItemNode temp = firstNode;

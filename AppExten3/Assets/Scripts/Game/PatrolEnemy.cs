@@ -9,6 +9,11 @@ public class PatrolEnemy : Enemy
     private int currentWaypointIndex = 0;
     private float followRange = 6f;
 
+    public GameObject projectilePrefab;
+    public Transform firePoint;
+    public Transform firePoint2;
+    public int projectileSpeed;
+
     private int currentState = 0; //0 patrol, 1 chase
     bool isPatrolling = true;
     bool noticedPlayer = false;
@@ -27,11 +32,36 @@ public class PatrolEnemy : Enemy
 
     void doAttack(float dist){
 
-        currentState = 1;
+        agent.isStopped = true; ;
+        gameObject.transform.LookAt(Player.transform);
 
+        int rnd = Random.Range(0, 1);
+        GameObject projectile;
+        Rigidbody rb;
+        switch (rnd)
+        {
+            case 0:
+                projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+                rb = projectile.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = firePoint.forward * projectileSpeed;
+                }
+                Destroy(projectile, 5f);
+                attackCooldown = 500;
+                break;
+            case 1:
+                projectile = Instantiate(projectilePrefab, firePoint2.position, Quaternion.identity);
+                rb = projectile.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = firePoint2.forward * projectileSpeed;
+                }
+                Destroy(projectile, 5f);
+                attackCooldown = 500;
+                break;
+        }
         
-        Player.changeHeatlh(-Damage);
-        attackCooldown = 500;
 
     }
 
@@ -44,14 +74,13 @@ public class PatrolEnemy : Enemy
 
         attackCooldown--;
 
-        if (distance <= attackRange && attackCooldown <= 0 && currentState != 1) //player is in range and not already attacking
+        if (distance <= attackRange && attackCooldown <= 0) //player is in range and not already attacking
         {
             doAttack(distance);
-            attackCooldown = 500;
         }
         else if (distance > attackRange && !agent.pathPending && agent.remainingDistance < 0.5f) //player isnt near
         {
-            
+            agent.isStopped = false;
             doPatrol();
         }
     }

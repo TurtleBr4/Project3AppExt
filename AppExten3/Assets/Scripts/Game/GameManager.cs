@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public ItemDatabase itemDatabase;
     [SerializeField]
     private Inventory inv;
-    private Hotbar hotbar; //our hotbar inventory, holds 3 items
+    private Hotbar quickInv; //our hotbar inventory, holds 3 items
     public Image[] inventorySlots;
     public Image[] equipSlots;
     public Image[] hotbarSlots;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         if (!savedFileExists)
         {
             inv = new Inventory(itemDatabase);
-            hotbar = new Hotbar();
+            
             setGameState(1);
             return;
         }
@@ -159,19 +159,22 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)){ //select the hotbar slot
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        { //select the hotbar slot
             Vector2 newPosition = activeHotbarSlot.anchoredPosition;
             newPosition.x = aHSPositions[0];
             activeHotbarSlot.anchoredPosition = newPosition;
             activeItem = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             Vector2 newPosition = activeHotbarSlot.anchoredPosition;
             newPosition.x = aHSPositions[1];
             activeHotbarSlot.anchoredPosition = newPosition;
             activeItem = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
             Vector2 newPosition = activeHotbarSlot.anchoredPosition;
             newPosition.x = aHSPositions[2];
             activeHotbarSlot.anchoredPosition = newPosition;
@@ -179,13 +182,16 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha8)){ //debugging feature
-            if(toggleCamLocation){
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        { //debugging feature
+            if (toggleCamLocation)
+            {
                 camsys.switchFocus(tempCameraLocation, 7, 5);
                 toggleCamLocation = !toggleCamLocation;
                 Debug.Log(Application.persistentDataPath);
             }
-            else{
+            else
+            {
                 camsys.switchFocus(camsys.playerTarget, 3, 5);
                 toggleCamLocation = !toggleCamLocation;
                 SaveGameToFile();
@@ -193,14 +199,54 @@ public class GameManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Tab)) { debugLoadFile(); }
-        if (Input.GetKeyDown(KeyCode.Mouse1)) { useItem(activeItem); } //use the active item in the hotbar
-
+        if (Input.GetKeyDown(KeyCode.Mouse1)) //use the active item in the hotbar
+        {
+            int i = 0;
+            ItemNode temp = inv.firstNode;
+            if(temp != null)
+            {
+                while (temp != null && i <= activeItem)
+                {
+                    if (i == activeItem)
+                    {
+                        Debug.Log("aaaaaaaaaaaaaaaaaa");
+                        useItem(activeItem, itemDatabase.GetItemById(temp.getID()), temp);
+                        break;
+                    }
+                    temp = temp.next;
+                    i++;
+                }
+            }   
+        } 
         updateHealthDisplay();
     }
 
-    void useItem(int index)
+    void useItem(int index, ItemData item, ItemNode node)
     {
-        inv.removeItem(index);
+        if (item.isHeal)
+        {
+            player.changeHeatlh(item.healAmount);
+            Debug.Log("healing from the useItem method!");
+        }
+        else if (item.isWeapon)
+        {
+            player.specialAttackNow(item.damage, item.itemID);
+            Debug.Log("attack! from the useItem method!");
+        }
+        else
+        {
+            player.specialItemNow(item.itemID);
+            Debug.Log("special! from the useItem method!");
+        }
+
+        if(node.getQuantity() != 1)
+        {
+            node.setQuantity(node.getQuantity() - 1);
+        }
+        else
+        {
+            inv.removeItem(index);
+        }
         updateInventorySlots(1);
     }
 
@@ -234,7 +280,7 @@ public class GameManager : MonoBehaviour
 
     public void switchActivePanel(int panIndex)
     {
-        if(getGameState() == 1 && panIndex != -1)
+        if (getGameState() == 1 && panIndex != -1)
         {
             setGameState(2); //change the game state
             panelsToSwitch[panIndex].SetActive(true);
@@ -254,7 +300,7 @@ public class GameManager : MonoBehaviour
             activePanel = panIndex;
             panelsToSwitch[panIndex].SetActive(true);
         }
-        
+
     }
 
     int sceneSwitch(int sceneID)
@@ -277,20 +323,7 @@ public class GameManager : MonoBehaviour
     {
         if (inv != null && itemDatabase != null)
         {
-            ItemNode existing = inv.getNodeById(id);
-
-            if (existing == null)
-            {
-                // Item is new to the inventory
-                inv.addItem(id, quant);
-                ItemNode newNode = inv.getNodeById(id); // Get the node that was just added
-                hotbar.assignToHotbar(newNode); // Assign to hotbar
-            }
-            else
-            {
-                existing.setQuantity(existing.getQuantity() + quant);
-            }
-
+            inv.addItem(id, quant);
             ItemData item = itemDatabase.GetItemById(id);
             if (item != null)
             {
@@ -301,21 +334,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("Inventory or ItemDatabase is not assigned!");
         }
-
         printInventoryToConsole();
-        updateInventorySlots(1); // Refresh hotbar
     }
 
-    // Update UI for all slots
-    public void UpdateUI()
-    {
-        updateInventorySlots(0);  // Inventory
-        updateInventorySlots(1);  // Hotbar
-        updateInventorySlots(2);  // Equipable Slots (if used)
-    }
-
-    // Print inventory to the console for debugging purposes
-    public void printInventoryToConsole()
+    public void printInventoryToConsole() //for debugging
     {
         ItemNode temp = inv.firstNode;
         while (temp != null)
@@ -325,90 +347,58 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update UI slots for a specific category (Inventory, Hotbar, Equipable)
     void updateInventorySlots(int choice)
     {
         int i = 0;
         ItemNode temp = inv.firstNode;
-
         switch (choice)
         {
-            case 0: // Inventory slots
-                while (temp != null && i < inventorySlots.Length)
+            case 0: //inventory menu slots
+                
+                for (i = 0; i < inventorySlots.Length; i++)
                 {
-                    inventorySlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                    if (temp != null)
+                    {
+                        inventorySlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                        temp = temp.next;
+                    }
+                    else
+                    {
+                        inventorySlots[i].sprite = emptySlotImage;
+                    }
                     Debug.Log("Updating inventory slot " + i);
-                    i++;
-                    temp = temp.next;
                 }
                 break;
 
-            case 1: // Hotbar slots
-                ItemNode hotbarTemp = hotbar.firstNode;
-                while (hotbarTemp != null && i < hotbarSlots.Length)
+            case 1: //hotbar slots
+                
+                for (i = 0; i < hotbarSlots.Length; i++)
                 {
-                    hotbarSlots[i].sprite = itemDatabase.GetItemById(hotbarTemp.getID()).Icon;
+                    if (temp != null && temp.getID() != -1) // or null-check if you're setting `null` nodes
+                    {
+                        hotbarSlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                        temp = temp.next;
+                    }
+                    else
+                    {
+                        hotbarSlots[i].sprite = emptySlotImage;
+                        if (temp != null) temp = temp.next;
+                    }
                     Debug.Log("Updating hotbar slot " + i);
-                    i++;
-                    hotbarTemp = hotbarTemp.next;
                 }
                 break;
-
-            case 2: // Equipable slots (if any)
+            case 2: //equipable slots
                 while (temp != null && i < equipSlots.Length)
                 {
                     equipSlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
-                    Debug.Log("Updating equipable slot " + i);
+                    Debug.Log("Updating slot " + i);
                     i++;
                     temp = temp.next;
                 }
                 break;
         }
+
     }
-
-    // Swap items between inventory slots
-    public void swapInventoryItems(int invIndex1, int invIndex2)
-    {
-        inv.swapItems(invIndex1, invIndex2);
-        UpdateUI();  // Update the UI to reflect the changes
-    }
-
-    // Swap items within the hotbar
-    public void swapHotbarItems(int hotbarIndex1, int hotbarIndex2)
-    {
-        hotbar.swapHotbarItems(hotbarIndex1, hotbarIndex2);
-        UpdateUI();  // Update the UI to reflect the changes
-    }
-
-    // Swap items between inventory and hotbar
-    public void swapInventoryAndHotbarItems(int inventoryIndex, int hotbarIndex)
-    {
-        ItemNode inventoryItem = inv.getNodeById(inventoryIndex);
-        ItemNode hotbarItem = hotbar.getItemAt(hotbarIndex);
-
-        if (inventoryItem != null && hotbarItem != null)
-        {
-            // Swap the items between the inventory and hotbar
-            inv.swapItems(inventoryIndex, hotbarIndex);
-        }
-
-        UpdateUI();  // Update the UI to reflect the changes
-    }
-
-    // Example of swapping hotbar and inventory
-    public void swapHotbarToInventory(int hotbarIndex, int invIndex)
-    {
-        ItemNode hotbarItem = hotbar.getItemAt(hotbarIndex);
-        ItemNode inventoryItem = inv.getNodeById(invIndex);
-
-        if (hotbarItem != null && inventoryItem != null)
-        {
-            hotbar.swapHotbarItems(hotbarIndex, invIndex);
-        }
-
-        UpdateUI();
-    }
-
 
     private string saveFile => Application.persistentDataPath + "/save.json";
 

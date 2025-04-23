@@ -1300,6 +1300,63 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8498387735293118709, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
   m_PrefabInstance: {fileID: 6982800765252718083}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &951125487
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1853023782364485026, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_Name
+      value: Motor Oil (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.144
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.032
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843173042702867484, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: adc58c13333718145a6419c3d2ec61de, type: 3}
 --- !u!1 &989134777 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3241397769389490047, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
@@ -5223,4 +5280,5 @@ SceneRoots:
   - {fileID: 1769568671256425186}
   - {fileID: 3628175917805204166}
   - {fileID: 1244362743698573530}
+  - {fileID: 951125487}
   - {fileID: 3807094182224706468}

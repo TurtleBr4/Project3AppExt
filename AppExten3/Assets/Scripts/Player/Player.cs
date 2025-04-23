@@ -155,6 +155,16 @@ public class Player : MonoBehaviour
         
     }
 
+    public void specialAttackNow(int damage, int id)
+    {
+        Debug.Log("special attack!");
+    }
+
+    public void specialItemNow(int id)
+    {
+        Debug.Log("special item!");
+    }
+
     void attackDone() //called from our event when the animation is finished
     {
         isAttacking = false;

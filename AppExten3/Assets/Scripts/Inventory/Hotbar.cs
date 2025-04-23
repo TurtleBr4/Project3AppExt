@@ -48,22 +48,17 @@ public class Hotbar
     {
         if (index < 0 || index >= count()) return;
 
+        // Traverse to the target index
         ItemNode temp = firstNode;
-        ItemNode prev = null;
-
         for (int i = 0; i < index; i++)
         {
-            prev = temp;
             temp = temp.next;
         }
 
-        if (prev == null)
+        // Simply set the item at the given index to null
+        if (temp != null)
         {
-            firstNode = temp.next;
-        }
-        else
-        {
-            prev.next = temp.next;
+            temp = null;
         }
     }
 
