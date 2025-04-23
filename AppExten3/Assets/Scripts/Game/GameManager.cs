@@ -18,9 +18,12 @@ public class GameManager : MonoBehaviour
     public ItemDatabase itemDatabase;
     [SerializeField]
     private Inventory inv;
+    private Inventory quickInv; //our hotbar inventory, holds 3 items
     public Image[] inventorySlots;
     public Image[] equipSlots;
     public Image[] hotbarSlots;
+    public RectTransform activeHotbarSlot;
+    public float[] aHSPositions;
 
     //Dialogue Stuff
     private DialogueManager yapper;
@@ -152,6 +155,24 @@ public class GameManager : MonoBehaviour
                 switchActivePanel(-1); //close the pause menu
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)){ //select the hotbar slot
+            Vector2 newPosition = activeHotbarSlot.anchoredPosition;
+            newPosition.x = aHSPositions[0];
+            activeHotbarSlot.anchoredPosition = newPosition;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            Vector2 newPosition = activeHotbarSlot.anchoredPosition;
+            newPosition.x = aHSPositions[1];
+            activeHotbarSlot.anchoredPosition = newPosition;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            Vector2 newPosition = activeHotbarSlot.anchoredPosition;
+            newPosition.x = aHSPositions[2];
+            activeHotbarSlot.anchoredPosition = newPosition;
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Alpha1)){ //debugging feature
             if(toggleCamLocation){
                 camsys.switchFocus(tempCameraLocation, 7, 5);
