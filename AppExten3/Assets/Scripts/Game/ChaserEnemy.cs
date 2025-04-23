@@ -23,6 +23,8 @@ public class ChaseEnemy : Enemy
             return;
         }
 
+        updateHealthDisplay();
+
         float distance = Vector3.Distance(transform.position, positionStateChecker().position);
 
         if (distance <= detectionRange)

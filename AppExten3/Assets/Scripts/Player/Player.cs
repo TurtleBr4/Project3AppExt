@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         if (!isFrozen) { goMove(); }
         Debug.Log(Health);
         lastRotation = playerModel.transform.rotation;
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && Time.timeScale > .5f)
         {
             attackNow();
         }

@@ -7,16 +7,12 @@ public class PatrolEnemy : Enemy
     public float attackRange = 3f;
     public int attackCooldown = 100;
     private int currentWaypointIndex = 0;
-    private float followRange = 6f;
 
     public GameObject projectilePrefab;
     public Transform firePoint;
     public Transform firePoint2;
     public int projectileSpeed;
 
-    private int currentState = 0; //0 patrol, 1 chase
-    bool isPatrolling = true;
-    bool noticedPlayer = false;
 
     [SerializeField] private Transform thingThatLooksAtPlayer;
 
@@ -80,7 +76,9 @@ public class PatrolEnemy : Enemy
 
         float distance = Vector3.Distance(agent.nextPosition, positionStateChecker().position);
 
-        if(attackCooldown != 0)
+        updateHealthDisplay();
+
+        if (attackCooldown != 0)
         {
             attackCooldown--;
         }

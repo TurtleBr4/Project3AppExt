@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class Enemy : MonoBehaviour
     protected NavMeshAgent agent;
     [SerializeField]
     protected Animator anim;
+
+    public Sprite[] healthIcons;
+    public Image healthDisplay;
 
     void Start()
     {
@@ -52,5 +56,33 @@ public class Enemy : MonoBehaviour
 
     public int getHealth(){return Health;}
     public int getDamage(){return Damage;}
+
+    protected void updateHealthDisplay()
+    {
+        switch (Health)
+        {
+            case > 84:
+                healthDisplay.sprite = healthIcons[0];
+                break;
+            case > 68:
+                healthDisplay.sprite = healthIcons[1];
+                break;
+            case > 52:
+                healthDisplay.sprite = healthIcons[2];
+                break;
+            case > 36:
+                healthDisplay.sprite = healthIcons[3];
+                break;
+            case > 20:
+                healthDisplay.sprite = healthIcons[4];
+                break;
+            case > 0:
+                healthDisplay.sprite = healthIcons[5];
+                break;
+            default:
+                healthDisplay.sprite = healthIcons[6];
+                break;
+        }
+    }
 
 }
