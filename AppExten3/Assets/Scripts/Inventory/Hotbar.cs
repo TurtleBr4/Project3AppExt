@@ -1,21 +1,18 @@
 using UnityEngine;
-
 public class Hotbar
 {
-    public HotbarNode firstNode;
-    private Inventory mainInventory;
+    public ItemNode firstNode;
     private const int MAX_SLOTS = 3;
 
-    public Hotbar(Inventory inventory)
+    public Hotbar()
     {
-        mainInventory = inventory;
         firstNode = null;
     }
 
     public int count()
     {
         int count = 0;
-        HotbarNode temp = firstNode;
+        ItemNode temp = firstNode;
         while (temp != null)
         {
             count++;
@@ -24,74 +21,41 @@ public class Hotbar
         return count;
     }
 
-    public void assignToHotbar(ItemNode reference)
+    public void assignToHotbar(ItemNode item)
     {
-        if (reference == null || count() >= MAX_SLOTS)
+        if (item == null || count() >= MAX_SLOTS)
         {
-            Debug.LogWarning("Hotbar is full or reference is null.");
+            Debug.LogWarning("Hotbar is full or the item is null.");
             return;
         }
 
         if (firstNode == null)
         {
-            firstNode = new HotbarNode(reference);
+            firstNode = item;
         }
         else
         {
-            HotbarNode temp = firstNode;
+            ItemNode temp = firstNode;
             while (temp.next != null)
             {
                 temp = temp.next;
             }
-            temp.next = new HotbarNode(reference);
-        }
-    }
-
-    public void useItem(int index, Inventory inventory)
-    {
-        HotbarNode temp = firstNode;
-        HotbarNode prev = null;
-
-        for (int i = 0; i < index && temp != null; i++)
-        {
-            prev = temp;
-            temp = temp.next;
-        }
-
-        if (temp == null || temp.reference == null)
-            return;
-
-        temp.reference.setQuantity(temp.reference.getQuantity() - 1);
-
-        if (temp.reference.getQuantity() <= 0)
-        {
-            // Find the index of the reference in the inventory and remove it
-            int invIndex = inventory.getIndexOf(temp.reference);
-            if (invIndex != -1)
-            {
-                inventory.removeItem(invIndex);
-            }
-
-            // Remove the hotbar node
-            if (prev == null)
-                firstNode = temp.next;
-            else
-                prev.next = temp.next;
+            temp.next = item;
         }
     }
 
     public void removeFromHotbar(int index)
     {
-        HotbarNode temp = firstNode;
-        HotbarNode prev = null;
+        if (index < 0 || index >= count()) return;
 
-        for (int i = 0; i < index && temp != null; i++)
+        ItemNode temp = firstNode;
+        ItemNode prev = null;
+
+        for (int i = 0; i < index; i++)
         {
             prev = temp;
             temp = temp.next;
         }
-
-        if (temp == null) return;
 
         if (prev == null)
         {
@@ -103,15 +67,55 @@ public class Hotbar
         }
     }
 
-    public bool ContainsReference(ItemNode reference)
+    public void swapHotbarItems(int index1, int index2)
     {
-        HotbarNode temp = firstNode;
-        while (temp != null)
+        if (index1 == index2 || index1 < 0 || index2 < 0) return;
+
+        ItemNode node1 = getNodeAt(index1);
+        ItemNode node2 = getNodeAt(index2);
+
+        if (node1 != null && node2 != null)
         {
-            if (temp.reference == reference)
-                return true;
-            temp = temp.next;
+            int tempID = node1.getID();
+            int tempQuantity = node1.getQuantity();
+
+            node1.setQuantity(node2.getQuantity());
+            node1.setID(node2.getID());
+
+            node2.setQuantity(tempQuantity);
+            node2.setID(tempID);
         }
-        return false;
+    }
+
+    public void swapInventoryAndHotbarItems(int inventoryIndex, int hotbarIndex, Inventory inventory)
+    {
+        if (inventoryIndex < 0 || hotbarIndex < 0) return;
+
+        ItemNode inventoryItem = inventory.getNodeById(inventoryIndex);
+        ItemNode hotbarItem = getNodeAt(hotbarIndex);
+
+        if (inventoryItem != null && hotbarItem != null)
+        {
+            // Swap items between hotbar and inventory
+            inventory.swapItems(inventoryIndex, hotbarIndex);
+        }
+    }
+
+    private ItemNode getNodeAt(int index)
+    {
+        int currentIndex = 0;
+        ItemNode temp = firstNode;
+        while (temp != null && currentIndex < index)
+        {
+            temp = temp.next;
+            currentIndex++;
+        }
+        return temp;
+    }
+
+    public ItemNode getItemAt(int index)
+    {
+        ItemNode node = getNodeAt(index);
+        return node != null ? node : null;
     }
 }

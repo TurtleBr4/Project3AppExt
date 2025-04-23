@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public ItemDatabase itemDatabase;
     [SerializeField]
     private Inventory inv;
-    private Hotbar quickInv; //our hotbar inventory, holds 3 items
+    private Hotbar hotbar; //our hotbar inventory, holds 3 items
     public Image[] inventorySlots;
     public Image[] equipSlots;
     public Image[] hotbarSlots;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         if (!savedFileExists)
         {
             inv = new Inventory(itemDatabase);
-            quickInv = new Hotbar(inv);
+            hotbar = new Hotbar();
             setGameState(1);
             return;
         }
@@ -275,42 +275,47 @@ public class GameManager : MonoBehaviour
 
     public void addItemToInventory(int id, int quant)
     {
-        if (inv == null || itemDatabase == null)
+        if (inv != null && itemDatabase != null)
         {
-            Debug.LogError("Inventory or ItemDatabase is not assigned!");
-            return;
-        }
+            ItemNode existing = inv.getNodeById(id);
 
-        // Check if item already exists in inventory
-        ItemNode existingNode = inv.getNodeById(id);
+            if (existing == null)
+            {
+                // Item is new to the inventory
+                inv.addItem(id, quant);
+                ItemNode newNode = inv.getNodeById(id); // Get the node that was just added
+                hotbar.assignToHotbar(newNode); // Assign to hotbar
+            }
+            else
+            {
+                existing.setQuantity(existing.getQuantity() + quant);
+            }
 
-        if (existingNode != null)
-        {
-            existingNode.setQuantity(existingNode.getQuantity() + quant);
-            Debug.Log($"Picked up {quant}x {itemDatabase.GetItemById(id).Name} (stacked)");
+            ItemData item = itemDatabase.GetItemById(id);
+            if (item != null)
+            {
+                Debug.Log($"Picked up {quant}x {item.Name}");
+            }
         }
         else
         {
-            // Add to inventory
-            inv.addItem(id, quant);
-            ItemNode newNode = inv.getNodeById(id); // Should now exist
-
-            // Only assign to hotbar if it's not already there
-            if (!quickInv.ContainsReference(newNode))
-            {
-                Debug.Log("Assigning something to the hotbar!");
-                quickInv.assignToHotbar(newNode);
-                updateInventorySlots(1); // Refresh hotbar
-            }
-
-            Debug.Log($"Picked up {quant}x {itemDatabase.GetItemById(id).Name} (new)");
+            Debug.LogError("Inventory or ItemDatabase is not assigned!");
         }
 
-        updateInventorySlots(0); // Refresh main inventory
         printInventoryToConsole();
+        updateInventorySlots(1); // Refresh hotbar
     }
 
-    public void printInventoryToConsole() //for debugging
+    // Update UI for all slots
+    public void UpdateUI()
+    {
+        updateInventorySlots(0);  // Inventory
+        updateInventorySlots(1);  // Hotbar
+        updateInventorySlots(2);  // Equipable Slots (if used)
+    }
+
+    // Print inventory to the console for debugging purposes
+    public void printInventoryToConsole()
     {
         ItemNode temp = inv.firstNode;
         while (temp != null)
@@ -320,61 +325,90 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Update UI slots for a specific category (Inventory, Hotbar, Equipable)
     void updateInventorySlots(int choice)
     {
         int i = 0;
         ItemNode temp = inv.firstNode;
+
         switch (choice)
         {
-            case 0: //inventory menu slots
+            case 0: // Inventory slots
                 while (temp != null && i < inventorySlots.Length)
                 {
                     inventorySlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
-                    Debug.Log("Updating slot " + i);
+                    Debug.Log("Updating inventory slot " + i);
                     i++;
                     temp = temp.next;
                 }
                 break;
-            case 1: // hotbar slots
-                HotbarNode hotbarTemp = quickInv.firstNode;
-                while (i < hotbarSlots.Length)
+
+            case 1: // Hotbar slots
+                ItemNode hotbarTemp = hotbar.firstNode;
+                while (hotbarTemp != null && i < hotbarSlots.Length)
                 {
-                    if (hotbarTemp != null && hotbarTemp.reference != null)
-                    {
-                        ItemData data = itemDatabase.GetItemById(hotbarTemp.reference.getID());
-                        if (data != null)
-                        {
-                            hotbarSlots[i].sprite = data.Icon;
-                            Debug.Log("Hotbar slot " + i + " set to item: " + data.Name);
-                        }
-                        else
-                        {
-                            Debug.LogWarning("Item ID not found in database: " + hotbarTemp.reference.getID());
-                            hotbarSlots[i].sprite = emptySlotImage;
-                        }
-
-                        hotbarTemp = hotbarTemp.next;
-                    }
-                    else
-                    {
-                        hotbarSlots[i].sprite = emptySlotImage;
-                    }
-
+                    hotbarSlots[i].sprite = itemDatabase.GetItemById(hotbarTemp.getID()).Icon;
+                    Debug.Log("Updating hotbar slot " + i);
                     i++;
+                    hotbarTemp = hotbarTemp.next;
                 }
                 break;
-            case 2: //equipable slots
+
+            case 2: // Equipable slots (if any)
                 while (temp != null && i < equipSlots.Length)
                 {
                     equipSlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
-                    Debug.Log("Updating slot " + i);
+                    Debug.Log("Updating equipable slot " + i);
                     i++;
                     temp = temp.next;
                 }
                 break;
         }
-       
     }
+
+    // Swap items between inventory slots
+    public void swapInventoryItems(int invIndex1, int invIndex2)
+    {
+        inv.swapItems(invIndex1, invIndex2);
+        UpdateUI();  // Update the UI to reflect the changes
+    }
+
+    // Swap items within the hotbar
+    public void swapHotbarItems(int hotbarIndex1, int hotbarIndex2)
+    {
+        hotbar.swapHotbarItems(hotbarIndex1, hotbarIndex2);
+        UpdateUI();  // Update the UI to reflect the changes
+    }
+
+    // Swap items between inventory and hotbar
+    public void swapInventoryAndHotbarItems(int inventoryIndex, int hotbarIndex)
+    {
+        ItemNode inventoryItem = inv.getNodeById(inventoryIndex);
+        ItemNode hotbarItem = hotbar.getItemAt(hotbarIndex);
+
+        if (inventoryItem != null && hotbarItem != null)
+        {
+            // Swap the items between the inventory and hotbar
+            inv.swapItems(inventoryIndex, hotbarIndex);
+        }
+
+        UpdateUI();  // Update the UI to reflect the changes
+    }
+
+    // Example of swapping hotbar and inventory
+    public void swapHotbarToInventory(int hotbarIndex, int invIndex)
+    {
+        ItemNode hotbarItem = hotbar.getItemAt(hotbarIndex);
+        ItemNode inventoryItem = inv.getNodeById(invIndex);
+
+        if (hotbarItem != null && inventoryItem != null)
+        {
+            hotbar.swapHotbarItems(hotbarIndex, invIndex);
+        }
+
+        UpdateUI();
+    }
+
 
     private string saveFile => Application.persistentDataPath + "/save.json";
 

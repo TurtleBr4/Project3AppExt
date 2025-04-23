@@ -13,4 +13,5 @@
     public int getQuantity() { return Quantity; }
     public void setQuantity(int val) { Quantity = val; }
     public int getID() { return ID; }
+    public void setID(int id) { ID = id; }
 }
