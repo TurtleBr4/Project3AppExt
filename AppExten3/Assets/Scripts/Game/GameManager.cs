@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     public Sprite[] healthIcons;
     public Image healthDisplay;
 
+    //Settings and all
+    public SettingsManager settings;
+
 
     private void Awake()
     {
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         playerLocation = player.transform;
         yapper = GetComponent<DialogueManager>();
+        settings = GetComponent<SettingsManager>();
     }
 
     private void loadGameData()
@@ -102,6 +106,10 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0;
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
+                    if(activePanel == 1)
+                    {
+                        settings.SaveSettings();
+                    }
                     switchActivePanel(-1); //close the pause menu
                     setGameState(1);
                 }
