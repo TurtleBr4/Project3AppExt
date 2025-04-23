@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,8 +21,10 @@ public class GameManager : MonoBehaviour
     private Inventory inv;
     private Hotbar quickInv; //our hotbar inventory, holds 3 items
     public Image[] inventorySlots;
+    public TMP_Text[] inventoryText;
     public Image[] equipSlots;
     public Image[] hotbarSlots;
+    public TMP_Text[] hotbarQuant;
     public RectTransform activeHotbarSlot;
     public float[] aHSPositions;
     public int activeItem = 0; //just a value to keep track of the active hotbar slot
@@ -82,6 +85,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if(player.isDead){
+            SceneManager.LoadScene(0); //booted back to the menu upon death
+        }
+
         switch (gameState)
         {
             case 0: //Load state, also the main menu state (this should only ever be called once!)
@@ -369,11 +376,13 @@ public class GameManager : MonoBehaviour
                     if (temp != null)
                     {
                         inventorySlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                        inventoryText[i].text = itemDatabase.GetItemById(temp.getID()).Name + ": x" + temp.getQuantity();
                         temp = temp.next;
                     }
                     else
                     {
                         inventorySlots[i].sprite = emptySlotImage;
+                        inventoryText[i].text = "";
                     }
                     Debug.Log("Updating inventory slot " + i);
                 }
@@ -386,11 +395,13 @@ public class GameManager : MonoBehaviour
                     if (temp != null && temp.getID() != -1) // or null-check if you're setting `null` nodes
                     {
                         hotbarSlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
+                        hotbarQuant[i].text = temp.getQuantity().ToString();
                         temp = temp.next;
                     }
                     else
                     {
                         hotbarSlots[i].sprite = emptySlotImage;
+                        hotbarQuant[i].text = "";
                         if (temp != null) temp = temp.next;
                     }
                     Debug.Log("Updating hotbar slot " + i);

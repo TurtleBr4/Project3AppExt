@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEditor.SearchService;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     public int Health;
     public int maxHealth;
     public Transform playerModel;
+    public bool isDead = false;
 
     //Movement
     public float moveSpeed = 10f;
@@ -70,6 +72,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && Time.timeScale > .5f)
         {
             attackNow();
+        }
+
+        if(Health <= 0 ){
+            gameOver();
         }
     }
 
@@ -267,6 +273,10 @@ public class Player : MonoBehaviour
     public void changeHeatlh(int amt){
         if(amt <= Health){Health += amt;}
         else{Health = 0;}
+    }
+
+    void gameOver(){
+        isDead = true;
     }
 
     private void OnTriggerStay(Collider other)
