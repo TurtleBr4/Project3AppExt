@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fbb8cbdafb1cdd4c8a70340159e0a25, type: 3}
-  m_Name: Heal01
+  m_Name: Heal02
   m_EditorClassIdentifier: 
-  itemID: 3
-  Name: Motor Oil
-  Description: Yum!
-  Icon: {fileID: 21300000, guid: 85bdc9f4c27c60e0ebc3c1e6cbf1703f, type: 3}
+  itemID: 4
+  Name: Compressed Air
+  Description: A can of compressed gas, cold to the touch!
+  Icon: {fileID: 21300000, guid: cee945c9ea6c0bd4a83d2fecc94af296, type: 3}
   isWeapon: 0
   isHeal: 1
   damage: 0
-  healAmount: 20
+  healAmount: 5
