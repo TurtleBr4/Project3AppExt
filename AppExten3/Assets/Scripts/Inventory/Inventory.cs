@@ -107,4 +107,33 @@ public class Inventory
         }
         firstNode = firstNode.next; //moves the 2nd item
     }
+
+    public int getIndexOf(ItemNode target)
+    {
+        int index = 0;
+        ItemNode temp = firstNode;
+
+        while (temp != null)
+        {
+            if (temp == target)
+                return index;
+
+            temp = temp.next;
+            index++;
+        }
+
+        return -1; // not found
+    }
+
+    public ItemNode getNodeById(int id)
+    {
+        ItemNode temp = firstNode;
+        while (temp != null)
+        {
+            if (temp.getID() == id)
+                return temp;
+            temp = temp.next;
+        }
+        return null;
+    }
 }

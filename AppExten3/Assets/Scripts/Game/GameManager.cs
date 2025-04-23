@@ -18,12 +18,14 @@ public class GameManager : MonoBehaviour
     public ItemDatabase itemDatabase;
     [SerializeField]
     private Inventory inv;
-    private Inventory quickInv; //our hotbar inventory, holds 3 items
+    private Hotbar quickInv; //our hotbar inventory, holds 3 items
     public Image[] inventorySlots;
     public Image[] equipSlots;
     public Image[] hotbarSlots;
     public RectTransform activeHotbarSlot;
     public float[] aHSPositions;
+    public int activeItem = 0; //just a value to keep track of the active hotbar slot
+    public Sprite emptySlotImage; //keep an image of an empty slot to replace once we remove an item
 
     //Dialogue Stuff
     private DialogueManager yapper;
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
         if (!savedFileExists)
         {
             inv = new Inventory(itemDatabase);
+            quickInv = new Hotbar(inv);
             setGameState(1);
             return;
         }
@@ -160,31 +163,45 @@ public class GameManager : MonoBehaviour
             Vector2 newPosition = activeHotbarSlot.anchoredPosition;
             newPosition.x = aHSPositions[0];
             activeHotbarSlot.anchoredPosition = newPosition;
+            activeItem = 0;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) {
             Vector2 newPosition = activeHotbarSlot.anchoredPosition;
             newPosition.x = aHSPositions[1];
             activeHotbarSlot.anchoredPosition = newPosition;
+            activeItem = 1;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3)) {
             Vector2 newPosition = activeHotbarSlot.anchoredPosition;
             newPosition.x = aHSPositions[2];
             activeHotbarSlot.anchoredPosition = newPosition;
+            activeItem = 2;
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)){ //debugging feature
+        if (Input.GetKeyDown(KeyCode.Alpha8)){ //debugging feature
             if(toggleCamLocation){
                 camsys.switchFocus(tempCameraLocation, 7, 5);
                 toggleCamLocation = !toggleCamLocation;
+                Debug.Log(Application.persistentDataPath);
             }
             else{
                 camsys.switchFocus(camsys.playerTarget, 3, 5);
                 toggleCamLocation = !toggleCamLocation;
+                SaveGameToFile();
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab)) { debugLoadFile(); }
+        if (Input.GetKeyDown(KeyCode.Mouse1)) { useItem(activeItem); } //use the active item in the hotbar
+
         updateHealthDisplay();
+    }
+
+    void useItem(int index)
+    {
+        inv.removeItem(index);
+        updateInventorySlots(1);
     }
 
     void updateHealthDisplay()
@@ -258,19 +275,38 @@ public class GameManager : MonoBehaviour
 
     public void addItemToInventory(int id, int quant)
     {
-        if (inv != null && itemDatabase != null)
+        if (inv == null || itemDatabase == null)
         {
-            inv.addItem(id, quant);
-            ItemData item = itemDatabase.GetItemById(id);
-            if (item != null)
-            {
-                Debug.Log($"Picked up {quant}x {item.Name}");
-            }
+            Debug.LogError("Inventory or ItemDatabase is not assigned!");
+            return;
+        }
+
+        // Check if item already exists in inventory
+        ItemNode existingNode = inv.getNodeById(id);
+
+        if (existingNode != null)
+        {
+            existingNode.setQuantity(existingNode.getQuantity() + quant);
+            Debug.Log($"Picked up {quant}x {itemDatabase.GetItemById(id).Name} (stacked)");
         }
         else
         {
-            Debug.LogError("Inventory or ItemDatabase is not assigned!");
+            // Add to inventory
+            inv.addItem(id, quant);
+            ItemNode newNode = inv.getNodeById(id); // Should now exist
+
+            // Only assign to hotbar if it's not already there
+            if (!quickInv.ContainsReference(newNode))
+            {
+                Debug.Log("Assigning something to the hotbar!");
+                quickInv.assignToHotbar(newNode);
+                updateInventorySlots(1); // Refresh hotbar
+            }
+
+            Debug.Log($"Picked up {quant}x {itemDatabase.GetItemById(id).Name} (new)");
         }
+
+        updateInventorySlots(0); // Refresh main inventory
         printInventoryToConsole();
     }
 
@@ -299,13 +335,32 @@ public class GameManager : MonoBehaviour
                     temp = temp.next;
                 }
                 break;
-            case 1: //hotbar slots
-                while (temp != null && i < hotbarSlots.Length)
+            case 1: // hotbar slots
+                HotbarNode hotbarTemp = quickInv.firstNode;
+                while (i < hotbarSlots.Length)
                 {
-                    hotbarSlots[i].sprite = itemDatabase.GetItemById(temp.getID()).Icon;
-                    Debug.Log("Updating hotbar slot " + i);
+                    if (hotbarTemp != null && hotbarTemp.reference != null)
+                    {
+                        ItemData data = itemDatabase.GetItemById(hotbarTemp.reference.getID());
+                        if (data != null)
+                        {
+                            hotbarSlots[i].sprite = data.Icon;
+                            Debug.Log("Hotbar slot " + i + " set to item: " + data.Name);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Item ID not found in database: " + hotbarTemp.reference.getID());
+                            hotbarSlots[i].sprite = emptySlotImage;
+                        }
+
+                        hotbarTemp = hotbarTemp.next;
+                    }
+                    else
+                    {
+                        hotbarSlots[i].sprite = emptySlotImage;
+                    }
+
                     i++;
-                    temp = temp.next;
                 }
                 break;
             case 2: //equipable slots
@@ -381,6 +436,11 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Game loaded.");
         return true;
+    }
+
+    private void debugLoadFile()
+    {
+        LoadGameFromFile();
     }
 
 }
