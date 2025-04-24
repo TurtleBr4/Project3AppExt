@@ -50,7 +50,10 @@ public class GameManager : MonoBehaviour
     //Settings and all
     public SettingsManager settings;
 
-
+    public Inventory getInventory()
+    {
+        return inv;
+    }
     private void Awake()
     {
         //DontDestroyOnLoad(gameObject); //this is our game manager, it would be annoying to manually add it in everywhere so just make sure it never leaves us
@@ -94,7 +97,7 @@ public class GameManager : MonoBehaviour
         {
             case 0: //Load state, also the main menu state (this should only ever be called once!)
                 loadGameData();
-                saveManager.LoadGameFromFile(ref player, ref inv, ref progression);
+                if (!saveManager.newGame) { saveManager.LoadGameFromFile(ref player, ref inv, ref progression); }
                 break;
             case 1:
                 //call any regular game state functions here
@@ -267,6 +270,57 @@ public class GameManager : MonoBehaviour
         updateInventorySlots(1);
     }
 
+    private int getItemIDAtIndex(int index)
+    {
+        ItemNode current = inv.firstNode;
+        int i = 0;
+        while (current != null && i < index)
+        {
+            current = current.next;
+            i++;
+        }
+        return current != null ? current.getID() : -1;
+    }
+
+    private int? selectedSlotIndex = null; //int? means a nullable int
+    public void onInventorySlotClicked(int slotIndex)
+    {
+        if (inv == null) return;
+
+        ItemNode current = inv.firstNode;
+        int i = 0;
+
+        while (current != null && i < slotIndex)
+        {
+            current = current.next;
+            i++;
+        }
+
+        if (current == null || current.getID() == -1) return; //ignore clicks on empty slots
+
+        if (selectedSlotIndex == null)
+        {
+            selectedSlotIndex = slotIndex;
+            Debug.Log("Selected slot " + slotIndex);
+        }
+        else if (selectedSlotIndex != slotIndex)
+        {
+            // Get IDs of both slots
+            int id1 = getItemIDAtIndex(selectedSlotIndex.Value);
+            int id2 = getItemIDAtIndex(slotIndex);
+
+            inv.swapItems(id1, id2);
+            updateInventorySlots(0);
+            updateInventorySlots(1); //in case hotbar reflects changes too
+
+            selectedSlotIndex = null;
+            Debug.Log("Swapped slots " + selectedSlotIndex + " and " + slotIndex);
+        }
+        else
+        {
+            selectedSlotIndex = null; //deselect if same slot is clicked again
+        }
+    }
     void updateHealthDisplay()
     {
         switch (player.Health)

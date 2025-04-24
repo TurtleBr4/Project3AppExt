@@ -1529,7 +1529,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Scene Selection
+  m_text: 'Scene Selection
+
+    Definitely BUGGY'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 939d52b89d9268245b4de22d23996e70, type: 2}
   m_sharedMaterial: {fileID: -7667828528272614801, guid: 939d52b89d9268245b4de22d23996e70, type: 2}
@@ -1556,8 +1558,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 28.7
+  m_fontSizeBase: 28.7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1638,6 +1640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDatabase: {fileID: 11400000, guid: 87ea80a754edf1b45974aa205b407b90, type: 2}
+  newGame: 0
 --- !u!4 &1247944150
 Transform:
   m_ObjectHideFlags: 0

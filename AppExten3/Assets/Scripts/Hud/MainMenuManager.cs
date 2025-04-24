@@ -28,5 +28,6 @@ public class MainMenuManager : MonoBehaviour
     public void newGame()
     {
         goToScene(2);
+        save.newGame = true;
     }
 }

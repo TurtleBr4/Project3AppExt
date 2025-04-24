@@ -8,6 +8,7 @@ public class SaveManager : MonoBehaviour
     public ItemDatabase itemDatabase;
     private string saveFile => Application.persistentDataPath + "/save.json";
     private int savedSceneIndex = -1; // Store the saved scene index
+    public bool newGame = false;
 
     private void Awake()
     {
@@ -102,6 +103,7 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFile, json);
         Debug.Log("Game saved.");
+        newGame = false;
     }
 
     // Load game data from a file
