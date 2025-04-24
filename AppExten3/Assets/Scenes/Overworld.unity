@@ -1691,6 +1691,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 33519292}
     - target: {fileID: 3871249092244728984, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: shadowsDropdown
+      value: 
+      objectReference: {fileID: 33519292}
+    - target: {fileID: 3871249092244728984, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
       propertyPath: fullscreenToggle
       value: 
       objectReference: {fileID: 1103281465}
@@ -12275,6 +12279,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 272470003286480937, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
+      propertyPath: m_Name
+      value: ShadowSliderTitle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2359871520639328274, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
     - target: {fileID: 3655857469730361593, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
       propertyPath: m_Camera
       value: 
@@ -12302,6 +12314,12 @@ PrefabInstance:
     - target: {fileID: 5712975802051426648, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: switchActivePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6558350151260647927, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
+      propertyPath: m_text
+      value: 'Shadows
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 6887742206430000919, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

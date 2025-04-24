@@ -8,7 +8,7 @@ using System.IO;
 public class SettingsManager : MonoBehaviour
 {
     [SerializeField] private Slider volumeSlider;
-    [SerializeField] private TMP_Dropdown qualityDropdown;
+    [SerializeField] private TMP_Dropdown shadowsDropdown;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private Toggle fullscreenToggle;
     [SerializeField] private Toggle vsyncToggle;
@@ -28,10 +28,11 @@ public class SettingsManager : MonoBehaviour
         // Volume
         volumeSlider.onValueChanged.AddListener(SetVolume);
 
-        // Quality
-        qualityDropdown.ClearOptions();
-        qualityDropdown.AddOptions(new List<string>(QualitySettings.names));
-        qualityDropdown.onValueChanged.AddListener(SetQuality);
+        // Shadows
+        shadowsDropdown.ClearOptions();
+        List<string> shadowOptions = new List<string> { "Off", "Hard Only", "All" };
+        shadowsDropdown.AddOptions(shadowOptions);
+        shadowsDropdown.onValueChanged.AddListener(SetShadows);
 
         // Resolutions
         resolutions = Screen.resolutions;
@@ -67,6 +68,9 @@ public class SettingsManager : MonoBehaviour
         // VSync
         vsyncToggle.isOn = QualitySettings.vSyncCount > 0;
         vsyncToggle.onValueChanged.AddListener(SetVSync);
+
+        LoadSettings();
+
     }
 
     public void SetVolume(float volume)
@@ -98,6 +102,15 @@ public class SettingsManager : MonoBehaviour
         QualitySettings.vSyncCount = enabled ? 1 : 0;
     }
 
+    public void SetShadows(int index)
+    {
+        switch (index)
+        {
+            case 0: QualitySettings.shadows = ShadowQuality.Disable; break;
+            case 1: QualitySettings.shadows = ShadowQuality.HardOnly; break;
+            case 2: QualitySettings.shadows = ShadowQuality.All; break;
+        }
+    }
     public void SaveSettings()
     {
         Resolution currentRes = Screen.currentResolution;
@@ -105,7 +118,7 @@ public class SettingsManager : MonoBehaviour
         SettingsData data = new SettingsData()
         {
             volume = volumeSlider.value,
-            qualityIndex = qualityDropdown.value,
+            shadowIndex = shadowsDropdown.value,
             resolutionIndex = resolutionDropdown.value,
             screenWidth = currentRes.width,
             screenHeight = currentRes.height,
@@ -126,7 +139,7 @@ public class SettingsManager : MonoBehaviour
             SettingsData data = JsonUtility.FromJson<SettingsData>(json);
 
             volumeSlider.value = data.volume;
-            qualityDropdown.value = data.qualityIndex;
+            shadowsDropdown.value = data.shadowIndex;
             resolutionDropdown.value = data.resolutionIndex;
             fullscreenToggle.isOn = data.isFullscreen;
             vsyncToggle.isOn = data.vsyncEnabled;
@@ -142,7 +155,7 @@ public class SettingsManager : MonoBehaviour
     void ApplyAllSettings(SettingsData data)
     {
         SetVolume(data.volume);
-        SetQuality(data.qualityIndex);
+        SetQuality(data.shadowIndex);
         SetResolution(data.resolutionIndex);
         SetFullscreen(data.isFullscreen);
         SetVSync(data.vsyncEnabled);
@@ -152,7 +165,7 @@ public class SettingsManager : MonoBehaviour
     public class SettingsData
     {
         public float volume;
-        public int qualityIndex;
+        public int shadowIndex;
         public int resolutionIndex;
         public int screenWidth;
         public int screenHeight;

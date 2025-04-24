@@ -5452,6 +5452,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 239756992}
     - target: {fileID: 3871249092244728984, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
+      propertyPath: shadowsDropdown
+      value: 
+      objectReference: {fileID: 239756992}
+    - target: {fileID: 3871249092244728984, guid: 936d43b86f8b9de8395bb0fb18a606a7, type: 3}
       propertyPath: fullscreenToggle
       value: 
       objectReference: {fileID: 544764838}
@@ -6082,6 +6086,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1803694228}
+    - target: {fileID: 6558350151260647927, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
+      propertyPath: m_text
+      value: 'Shadows
+
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 6887742206430000919, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
