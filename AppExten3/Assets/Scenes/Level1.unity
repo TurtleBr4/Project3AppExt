@@ -11596,7 +11596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6558350151260647927, guid: 06f7ba5102f0b70449cd3a5377d69f1e, type: 3}
       propertyPath: m_text
-      value: 'Shadows
+      value: 'Quality
 
 
 '
