@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = playerShoot;
         audioSource.loop = false;
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame

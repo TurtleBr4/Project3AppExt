@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 0
-  Damage: 0
+  Damage: 20
   isRangedAttacker: 0
   anim: {fileID: 115093663982298607}
   healthIcons:

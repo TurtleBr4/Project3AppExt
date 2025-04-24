@@ -27,7 +27,7 @@ public class Friendo : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -75,7 +75,7 @@ public class Friendo : MonoBehaviour
         Projectile p;
         GameObject bullet = Instantiate(projectileAttack, firePoint.position, Quaternion.identity);
         p = bullet.GetComponent<Projectile>();
-        p.damage = -attackDamage;
+        p.damage = attackDamage;
         p.shooterTag = tag;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)

@@ -416,8 +416,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  attackRange: 3
-  attackCooldown: 500
+  attackRange: 4
+  attackCooldown: 250
   projectilePrefab: {fileID: 4574456499827427895, guid: cf78ced6cdeda6945bfc8d857d2f69fe, type: 3}
   firePoint: {fileID: 8239101875810418126}
   firePoint2: {fileID: 3785535246732080722}

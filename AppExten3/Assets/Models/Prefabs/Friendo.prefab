@@ -497,12 +497,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 100
-  player: {fileID: 2314702003772320865, guid: 370292957e6f3dc43ad3dc987b4a9e01, type: 3}
-  moveSpeed: 0
-  attackSpeed: 0
+  player: {fileID: 0}
+  moveSpeed: 5
+  attackSpeed: 10
   projectileAttack: {fileID: 4574456499827427895, guid: cf78ced6cdeda6945bfc8d857d2f69fe, type: 3}
-  attackDamage: 0
-  shotCooldown: 0
+  attackDamage: 2
+  shotCooldown: 1
   firePoint: {fileID: 7154334202008133540}
   healthIcons:
   - {fileID: 4258001, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
@@ -526,8 +526,8 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 360
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -603,7 +603,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1001 &1206615658450395649
 PrefabInstance:

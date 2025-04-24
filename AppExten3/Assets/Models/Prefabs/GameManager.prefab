@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8217246478636836842}
   - component: {fileID: 4140587986673579082}
   - component: {fileID: 191786458696589894}
+  - component: {fileID: 3871249092244728984}
+  - component: {fileID: 3064097647100109791}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -57,11 +59,41 @@ MonoBehaviour:
   inventorySlots:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  inventoryText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   equipSlots: []
   hotbarSlots:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  hotbarQuant:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  activeHotbarSlot: {fileID: 0}
+  aHSPositions:
+  - -364
+  - -314
+  - -264
+  activeItem: 0
+  emptySlotImage: {fileID: 21300000, guid: ace047fc6a5cf5743a29b3123b0593d9, type: 3}
   camsys: {fileID: 0}
   tempCameraLocation: {fileID: 0}
   healthIcons:
@@ -73,6 +105,7 @@ MonoBehaviour:
   - {fileID: 1133226297, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
   - {fileID: -54762262, guid: 2476c129513ca0d4ea061559fa81e576, type: 3}
   healthDisplay: {fileID: 0}
+  settings: {fileID: 0}
 --- !u!114 &191786458696589894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,3 +121,37 @@ MonoBehaviour:
   dialogueText: {fileID: 0}
   dialogueBox: {fileID: 0}
   isYapping: 0
+--- !u!114 &3871249092244728984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036044127373853035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2e2617ba008b343b053cf17d4e881f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 0}
+  qualityDropdown: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
+  fullscreenToggle: {fileID: 0}
+  vsyncToggle: {fileID: 0}
+--- !u!114 &3064097647100109791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036044127373853035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c482dd3eed6773a48af5d72030527aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  songs:
+  - {fileID: 8300000, guid: bd98000f1d4ddf74db186be163630e22, type: 3}
+  - {fileID: 8300000, guid: 66ce6aa158c19eb43ba91ef268374092, type: 3}
+  - {fileID: 8300000, guid: 93099bc499ac7954e8c8d4cfbfd3e3aa, type: 3}
